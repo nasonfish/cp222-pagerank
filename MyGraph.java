@@ -20,4 +20,22 @@ public class MyGraph {
 	public int getSize() {
 		return this.size;
 	}
+	
+	public boolean isLinked(int i, int j) {
+		return links[i][j];
+	}
+	
+	public boolean[] getLinksIn(int i) {
+		boolean[] in = new boolean[this.size];
+		in = links[i];
+		return in;
+	}
+	
+	public boolean[] getLinksOut(int j) {
+		boolean[] out = new boolean[this.size];
+		for(int i = 0; i < this.size; i++) {
+			out[i] = links[i][j];
+		}
+		return out;
+	}
 }
