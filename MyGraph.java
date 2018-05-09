@@ -47,5 +47,6 @@ public class MyGraph {
 		System.out.println(graph.getLinksIn(3).length);
 		System.out.println(graph.getLinksOut(1).length);
 		System.out.println(graph.isLinked(2, 3));
+		System.out.println(graph.isLinked(3, 1));
 	}
 }
