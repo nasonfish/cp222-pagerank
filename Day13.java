@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Day13 {
 	public static void main(String[] args) {
 		String site = "http://cs.coloradocollege.edu/~mwhitehead/courses/2017_2018/CP222/Assignments/10/test.txt";
-		if(args.length != 1) {
+		if(args.length == 1) {
 			site = args[0];
 		}
 		Scanner scanner = null;
