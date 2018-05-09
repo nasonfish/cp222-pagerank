@@ -38,4 +38,14 @@ public class MyGraph {
 		}
 		return out;
 	}
+	
+	public static void main(String[] args) {
+		MyGraph graph = new MyGraph(4);
+		graph.link(1, 2);
+		graph.link(2, 3);
+		System.out.println(graph.getLinksIn(2).length);
+		System.out.println(graph.getLinksIn(3).length);
+		System.out.println(graph.getLinksOut(1).length);
+		System.out.println(graph.isLinked(2, 3));
+	}
 }
