@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 public class MyGraph implements GraphInterface {
 	
-	// Instance variables
 	/**
 	 * Links in this graph representation go only one direction.
 	 * 
@@ -14,7 +13,7 @@ public class MyGraph implements GraphInterface {
 	 * This variable use is consistent across this file: (i, j)
 	 */
 	private final boolean[][] links;
-	private final int size; // for convenience
+	private final int size; // for convenience of access-- identical to links.length or links[i].length
 	
 	/**
 	 * Constructs a new graph with the given number of vertices and no links

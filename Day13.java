@@ -2,13 +2,36 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
-// A program to find the PageRanks of all the nodes in a given graph
-
+/**
+ * Day 13 Homework Assignment-- PageRank.
+ * 
+ * Given an input of a URL with containing a graph graph
+ * (in notation with columns and rows where each slot is a binary digit
+ * in a visual representation of a 2d array), we compute the PageRank of each column with
+ * the assumption that (x, y) is considered a link.
+ * 
+ * @author Daniel Barnes '21 and Ely Merenstein '21
+ *
+ */
 public class Day13 {
 	
-	// Instance variables (to be used across various setup, calculation, and display methods)
+	/**
+	 * Graph Interface object-- the backbone of the operations
+	 * we do. A GraphInterface object reads in from the scanner and allows
+	 * us to call methods to interact with the data.
+	 */
 	private final GraphInterface graph;
+	/**
+	 * This keeps track of the page ranks for each page.
+	 * We iterate through the algorithm until pageRanks
+	 * is unchanging after an entire iteration.
+	 */
 	private final float[] pageRanks;
+	/**
+	 * A variable for timing-- we time from the beginning of
+	 * the PageRank algorithm until the end, and compute running_time for
+	 * output.
+	 */
 	private long running_time;
 	
 	/**
@@ -60,7 +83,7 @@ public class Day13 {
 	}
 	
 	/**
-	 * Calculate the PageRanks of all the vertices in the graph
+	 * Calculate the PageRanks of all the vertices in the graph.
 	 */
 	public void doPageRanks() {
 		long start = System.currentTimeMillis();
@@ -81,8 +104,9 @@ public class Day13 {
 				}
 				sum = ((1 - DAMPENING) / graph.getSize()) + DAMPENING * sum;
 				
-				if(pageRanks[j] != sum) {
-					converged = false; // we weren't converged during this iteration because something had to change.
+				if(pageRanks[j] != sum) { // note we have NO BUFFER-- the program will run until the change
+					                      // is smaller than float can handle.
+					converged = false; // we weren't converged during this iteration because something changed during the iteration.
 					pageRanks[j] = sum;
 				}
 			}
@@ -93,7 +117,7 @@ public class Day13 {
 	}
 	
 	/**
-	 * Print the results of the PageRank calculations
+	 * Print the results of the PageRank calculations.
 	 */
 	public void printPageRanks() {
 		// Print the PageRanks

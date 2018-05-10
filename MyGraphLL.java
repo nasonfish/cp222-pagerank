@@ -1,17 +1,28 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-// A class to represent a directed, unweighted graph, implemented using an array of nodes that represent vertices
-
+/**
+ * A class to represent a directed, unweighted graph, implemented using an 
+ * array of nodes that represent vertices.
+ * 
+ * @author Daniel Barnes '21 and Ely Merenstein '21
+ *
+ */
 public class MyGraphLL implements GraphInterface {
 	
-	// Instance variables
+	/**
+	 * Amount of nodes in our graph-- stored for convenience.
+	 * Identical to nodes.length after class instantiation.
+	 */
 	private final int size;
+	/**
+	 * An array of GraphNode objects.
+	 */
 	private final GraphNode[] nodes;
 
 	/**
-	 * Constructs a new graph with the given number of vertices and no links
-	 * @param size the number of vertices/nodes the graph will contain
+	 * Constructs a new graph with the given number of vertices and no links.
+	 * @param size the number of vertices/nodes the graph will contain.
 	 */
 	public MyGraphLL(int size) {
 		this.size = size;
@@ -23,8 +34,8 @@ public class MyGraphLL implements GraphInterface {
 	
 	/**
 	 * Instantiates and fills in a new MyGraphLL using the data stored in the given scanner
-	 * @param scanner the source of the data about the links of this graph
-	 * @return the new MyGraphLL object
+	 * @param scanner the source of the data about the links of this graph.
+	 * @return the new MyGraphLL object.
 	 */
 	public static MyGraphLL newInstance(Scanner scanner) {
 		MyGraphLL graph = null;
@@ -95,14 +106,25 @@ public class MyGraphLL implements GraphInterface {
 
 }
 
-// A class to represent a node in a MyGraphLL
-
+/**
+ * A class to represent a node in a MyGraphLL
+ * @author Daniel Barnes '21 and Ely Merenstein '21
+ *
+ */
 class GraphNode {
 	
-	// Instance variables
-	ArrayList<GraphNode> linksIn;
-	ArrayList<GraphNode> linksOut;
-	int id;
+	/**
+	 * A list of GraphNodes that point to this GraphNode
+	 */
+	private final ArrayList<GraphNode> linksIn;
+	/**
+	 * A list of GraphNodes that this GraphNode points to.
+	 */
+	private final ArrayList<GraphNode> linksOut;
+	/**
+	 * The id of this node-- rather, the index it's stored in in the MyGraphLL instance.
+	 */
+	private final int id;
 	
 	/**
 	 * Constructs a new GraphNode with the given id
