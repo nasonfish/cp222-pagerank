@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-// A class to represent a directed, unweighted graph
+// A class to represent a directed, unweighted graph, implemented using a 2D-array of links between conceptual vertices
 
 public class MyGraph implements GraphInterface {
 	
@@ -30,6 +30,11 @@ public class MyGraph implements GraphInterface {
 		}
 	}
 	
+	/**
+	 * Instantiates and fills in a new MyGraph using the data stored in the given scanner
+	 * @param scanner the source of the data about the links of this graph
+	 * @return the new MyGraph object
+	 */
 	public static MyGraph newInstance(Scanner scanner) {
 		MyGraph graph = null;
 		for(int i = 0; scanner.hasNextLine(); i++) {
@@ -51,6 +56,7 @@ public class MyGraph implements GraphInterface {
 	 * @param i the number of the row that represents the vertex at the tail of the link
 	 * @param j the number of the column that represents the vertex at the head of the link
 	 */
+	@Override
 	public void link(int i, int j) {
 		this.links[i][j] = true;
 	}
@@ -59,6 +65,7 @@ public class MyGraph implements GraphInterface {
 	 * Returns the number of vertices in this graph (the size of the graph)
 	 * @return the size of this graph
 	 */
+	@Override
 	public int getSize() {
 		return this.size;
 	}
@@ -68,6 +75,7 @@ public class MyGraph implements GraphInterface {
 	 * @param j the number of the column representing the vertex at the head of the links in question
 	 * @return an boolean array that denotes which vertices are linked towards the given vertex (i.e. the jth column of this.links)
 	 */
+	@Override
 	public boolean[] getLinksIn(int j) {
 		boolean[] in = new boolean[this.size];
 		for(int i = 0; i < this.size; i++){
@@ -81,6 +89,7 @@ public class MyGraph implements GraphInterface {
 	 * @param i the number of the row representing the vertex at the tail of the links in question
 	 * @return the number of outgoing connections from the given vertex (i.e. the number of "true"s in the ith row of this.links)
 	 */
+	@Override
 	public int getNumLinksOut(int i) {
 		int out = 0;
 		for(int j = 0; j < this.size; j++) {

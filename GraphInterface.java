@@ -1,10 +1,11 @@
+// An interface for directed, unweighted graphs
 
 public interface GraphInterface {
 	
 	/**
 	 * Creates a link from the first given vertex to the second given vertex 
-	 * @param i the number of the row that represents the vertex at the tail of the link
-	 * @param j the number of the column that represents the vertex at the head of the link
+	 * @param i the number that represents the vertex at the tail of the link
+	 * @param j the number that represents the vertex at the head of the link
 	 */
 	public void link(int i, int j);
 	
@@ -16,15 +17,15 @@ public interface GraphInterface {
 	
 	/**
 	 * Provides an array of booleans representing whether each vertex in this graph is linked TO the given vertex
-	 * @param j the number of the column representing the vertex at the head of the links in question
-	 * @return an boolean array that denotes which vertices are linked towards the given vertex (i.e. the jth column of this.links)
+	 * @param j the number representing the vertex at the head of the links in question
+	 * @return an boolean array that denotes which vertices are linked towards the given vertex
 	 */
 	public boolean[] getLinksIn(int j);
 	
 	/**
 	 * Provides the number of vertices to which the given vertex is linked
-	 * @param i the number of the row representing the vertex at the tail of the links in question
-	 * @return the number of outgoing connections from the given vertex (i.e. the number of "true"s in the ith row of this.links)
+	 * @param i the number representing the vertex at the tail of the links in question
+	 * @return the number of outgoing connections from the given vertex
 	 */
 	public int getNumLinksOut(int i);
 }

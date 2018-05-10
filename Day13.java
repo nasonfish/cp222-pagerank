@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class Day13 {
 	
+	// Instance variables (to be used across various setup, calculation, and display methods)
 	private final GraphInterface graph;
 	private final float[] pageRanks;
 	private long running_time;
@@ -34,30 +35,38 @@ public class Day13 {
 			return;
 		}
 		
+		// Create and fill in a graph using the data from the selected site
 		GraphInterface graph = MyGraph.newInstance(scanner);
 		scanner.close();
 		
+		// Calculate and display PageRanks for the graph
 		Day13 instance = new Day13(graph);
-
-		
 		instance.doPageRanks();
 		instance.printPageRanks();
 	}
 	
+	/**
+	 * Instantiates Day13 for running the calculation and display methods
+	 * @param graph the graph being used for this execution of the program
+	 */
 	public Day13(GraphInterface graph) {
+		this.graph = graph;
+		
 		// Set up and initialize an array to store the PageRanks
 		this.pageRanks = new float[graph.getSize()];
 		for(int i = 0; i < graph.getSize(); i++) {
 			this.pageRanks[i] = 1.0F / graph.getSize();
 		}
-		this.graph = graph;
 	}
 	
+	/**
+	 * Calculate the PageRanks of all the vertices in the graph
+	 */
 	public void doPageRanks() {
 		long start = System.currentTimeMillis();
 		// Loop until the PageRanks aren't changing anymore
 		boolean converged = false;
-		float dampening = 0.85F;
+		final float DAMPENING = 0.85F;
 		while(!converged) {
 			converged = true;
 			// Loop through each "node"
@@ -70,7 +79,8 @@ public class Day13 {
 						sum += pageRanks[i] / graph.getNumLinksOut(i);
 					}
 				}
-				sum = ((1 - dampening) / graph.getSize()) + dampening * sum;
+				sum = ((1 - DAMPENING) / graph.getSize()) + DAMPENING * sum;
+				
 				if(pageRanks[j] != sum) {
 					converged = false; // we weren't converged during this iteration because something had to change.
 					pageRanks[j] = sum;
@@ -82,13 +92,18 @@ public class Day13 {
 		this.running_time = end - start;
 	}
 	
+	/**
+	 * Print the results of the PageRank calculations
+	 */
 	public void printPageRanks() {
-		// Print out the PageRanks
+		// Print the PageRanks
 		float totalSum = 0;
 		for(int i = 0; i < graph.getSize(); i++) {
 			totalSum += pageRanks[i];
 			System.out.println(String.format("%d's page rank is %f", i, pageRanks[i]));
 		}
+		
+		// Print total sum of PageRanks and amount of time calculations took
 		System.out.println(String.format("%f is the total sum; calculated in %d ms", totalSum, running_time));
 
 	}
