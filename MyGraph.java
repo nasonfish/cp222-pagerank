@@ -8,6 +8,8 @@ public class MyGraph implements GraphInterface {
 	 * 
 	 * In this particular implementation, if links[i][j] is true,
 	 * that means i is linked to j.
+	 * 
+	 * This variable use is consistent across this file: (i, j)
 	 */
 	private final boolean[][] links;
 	private final int size; // for convenience

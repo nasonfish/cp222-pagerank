@@ -33,7 +33,7 @@ public class Day13 {
 		for(int i = 0; scanner.hasNextLine(); i++) {
 			String[] line = scanner.nextLine().split(" ");
 			if(graph == null) {
-				graph = new MyGraph(line.length); // we assume the length and the height
+				graph = new MyGraphLL(line.length); // we assume the length and the height
 			} 									  // of the file are the same.
 			for(int j = 0; j < line.length; j++) {
 				if(line[j].equals("1")) {
@@ -85,4 +85,12 @@ public class Day13 {
 		}
 		System.out.println(String.format("%f is the total sum; calculated in %d ms", totalSum, end - start));
 	}
+	// MyGraph: (small, bigger, big)
+	// 1.000000 is the total sum; calculated in 3 ms
+	// 0.993709 is the total sum; calculated in 5990 ms
+	// 0.993267 is the total sum; calculated in 96088 ms
+	// MyGraphLL: (small, bigger, big)
+	// 1.000000 is the total sum; calculated in 8 ms
+	// 0.993709 is the total sum; calculated in 7697 ms
+	// 0.993267 is the total sum; calculated in 105205 ms
 }
