@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 // A class to represent a directed, unweighted graph
 
 public class MyGraph implements GraphInterface {
@@ -26,6 +28,22 @@ public class MyGraph implements GraphInterface {
 				links[i][j] = false; // Nothing is linked yet
 			}
 		}
+	}
+	
+	public static MyGraph newInstance(Scanner scanner) {
+		MyGraph graph = null;
+		for(int i = 0; scanner.hasNextLine(); i++) {
+			String[] line = scanner.nextLine().split(" ");
+			if(graph == null) {
+				graph = new MyGraph(line.length); // we assume the length and the height
+			} 									  // of the file are the same.
+			for(int j = 0; j < line.length; j++) {
+				if(line[j].equals("1")) {
+					graph.link(i,j);
+				}
+			}
+		}
+		return graph;
 	}
 	
 	/**

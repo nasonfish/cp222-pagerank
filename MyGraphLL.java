@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class MyGraphLL implements GraphInterface {
 	
@@ -11,6 +12,22 @@ public class MyGraphLL implements GraphInterface {
 		for(int i = 0; i < size; i++) {
 			nodes[i] = new GraphNode(i);
 		}
+	}
+	
+	public static MyGraphLL newInstance(Scanner scanner) {
+		MyGraphLL graph = null;
+		for(int i = 0; scanner.hasNextLine(); i++) {
+			String[] line = scanner.nextLine().split(" ");
+			if(graph == null) {
+				graph = new MyGraphLL(line.length); // we assume the length and the height
+			} 									  // of the file are the same.
+			for(int j = 0; j < line.length; j++) {
+				if(line[j].equals("1")) {
+					graph.link(i,j);
+				}
+			}
+		}
+		return graph;
 	}
 	
 	@Override

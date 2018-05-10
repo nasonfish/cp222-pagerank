@@ -1,5 +1,11 @@
 
 public interface GraphInterface {
+	
+	/**
+	 * Creates a link from the first given vertex to the second given vertex 
+	 * @param i the number of the row that represents the vertex at the tail of the link
+	 * @param j the number of the column that represents the vertex at the head of the link
+	 */
 	public void link(int i, int j);
 	
 	/**

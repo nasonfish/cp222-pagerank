@@ -6,6 +6,10 @@ import java.util.Scanner;
 
 public class Day13 {
 	
+	private final GraphInterface graph;
+	private final float[] pageRanks;
+	private long running_time;
+	
 	/**
 	 * Main method for program execution
 	 * @param args Command line args.
@@ -14,11 +18,13 @@ public class Day13 {
 	 */
 	public static void main(String[] args) {
 		
-		// Graph source: whatever URL is entered into CLI, or the smallest of the three graphs if CLI is unused
+		// Graph source: whatever URL is provided as an argument during execution
+		// If none provided, use the smallest graph.
 		String site = "http://cs.coloradocollege.edu/~mwhitehead/courses/2017_2018/CP222/Assignments/10/test.txt";
-		if(args.length == 1) {
+		if(args.length >= 1) {
 			site = args[0];
 		}
+		
 		Scanner scanner = null;
 		try {
 			scanner = Utils.pullText(new URL(site));
@@ -28,28 +34,27 @@ public class Day13 {
 			return;
 		}
 		
-		// Read in the given data and store it in a MyGraph object
-		GraphInterface graph = null;
-		for(int i = 0; scanner.hasNextLine(); i++) {
-			String[] line = scanner.nextLine().split(" ");
-			if(graph == null) {
-				graph = new MyGraphLL(line.length); // we assume the length and the height
-			} 									  // of the file are the same.
-			for(int j = 0; j < line.length; j++) {
-				if(line[j].equals("1")) {
-					graph.link(i,j);
-				}
-			}
-		}
+		GraphInterface graph = MyGraph.newInstance(scanner);
+		scanner.close();
 		
+		Day13 instance = new Day13(graph);
+
+		
+		instance.doPageRanks();
+		instance.printPageRanks();
+	}
+	
+	public Day13(GraphInterface graph) {
 		// Set up and initialize an array to store the PageRanks
-		float[] pageRanks = new float[graph.getSize()];
+		this.pageRanks = new float[graph.getSize()];
 		for(int i = 0; i < graph.getSize(); i++) {
-			pageRanks[i] = 1.0F / graph.getSize();
+			this.pageRanks[i] = 1.0F / graph.getSize();
 		}
-		
+		this.graph = graph;
+	}
+	
+	public void doPageRanks() {
 		long start = System.currentTimeMillis();
-		
 		// Loop until the PageRanks aren't changing anymore
 		boolean converged = false;
 		float dampening = 0.85F;
@@ -57,7 +62,6 @@ public class Day13 {
 			converged = true;
 			// Loop through each "node"
 			for(int j = 0; j < graph.getSize(); j++) {
-				
 				// The formula for a PageRank:
 				float sum = 0;
 				boolean[] in = graph.getLinksIn(j);
@@ -66,7 +70,6 @@ public class Day13 {
 						sum += pageRanks[i] / graph.getNumLinksOut(i);
 					}
 				}
-				
 				sum = ((1 - dampening) / graph.getSize()) + dampening * sum;
 				if(pageRanks[j] != sum) {
 					converged = false; // we weren't converged during this iteration because something had to change.
@@ -74,16 +77,20 @@ public class Day13 {
 				}
 			}
 		}
-		
 		long end = System.currentTimeMillis();
 		
+		this.running_time = end - start;
+	}
+	
+	public void printPageRanks() {
 		// Print out the PageRanks
 		float totalSum = 0;
 		for(int i = 0; i < graph.getSize(); i++) {
 			totalSum += pageRanks[i];
 			System.out.println(String.format("%d's page rank is %f", i, pageRanks[i]));
 		}
-		System.out.println(String.format("%f is the total sum; calculated in %d ms", totalSum, end - start));
+		System.out.println(String.format("%f is the total sum; calculated in %d ms", totalSum, running_time));
+
 	}
 	// MyGraph: (small, bigger, big)
 	// 1.000000 is the total sum; calculated in 3 ms
