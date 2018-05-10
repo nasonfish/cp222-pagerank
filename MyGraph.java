@@ -1,9 +1,15 @@
 // A class to represent a directed, unweighted graph
 
-public class MyGraph {
+public class MyGraph implements GraphInterface {
 	
 	// Instance variables
-	private final boolean[][] links; // Stores which nodes are linked to which nodes
+	/**
+	 * Links in this graph representation go only one direction.
+	 * 
+	 * In this particular implementation, if links[i][j] is true,
+	 * that means i is linked to j.
+	 */
+	private final boolean[][] links;
 	private final int size; // for convenience
 	
 	/**
