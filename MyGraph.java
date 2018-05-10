@@ -31,10 +31,12 @@ public class MyGraph {
 		return in;
 	}
 	
-	public boolean[] getLinksOut(int j) {
-		boolean[] out = new boolean[this.size];
+	public int getNumLinksOut(int j) {
+		int out = 0;
 		for(int i = 0; i < this.size; i++) {
-			out[i] = links[i][j];
+			if(links[i][j]){
+				out++;
+			}
 		}
 		return out;
 	}
@@ -43,9 +45,12 @@ public class MyGraph {
 		MyGraph graph = new MyGraph(4);
 		graph.link(1, 2);
 		graph.link(2, 3);
+		for(int i = 0; i < 4; i++){
+					System.out.println(graph.getNumLinksOut(2));
+				}
 		System.out.println(graph.getLinksIn(2).length);
 		System.out.println(graph.getLinksIn(3).length);
-		System.out.println(graph.getLinksOut(1).length);
+		System.out.println(graph.getNumLinksOut(1));
 		System.out.println(graph.isLinked(2, 3));
 	}
 }
