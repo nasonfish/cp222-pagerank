@@ -43,21 +43,23 @@ public class Day13 {
 		}
 		
 		// Set up and initialize an array to store the PageRanks
-		double[] pageRanks = new double[graph.getSize()];
+		float[] pageRanks = new float[graph.getSize()];
 		for(int i = 0; i < graph.getSize(); i++) {
-			pageRanks[i] = 1.0 / graph.getSize();
+			pageRanks[i] = 1.0F / graph.getSize();
 		}
+		
+		long start = System.currentTimeMillis();
 		
 		// Loop until the PageRanks aren't changing anymore
 		boolean converged = false;
-		double dampening = 0.85;
+		float dampening = 0.85F;
 		while(!converged) {
 			converged = true;
 			// Loop through each "node"
 			for(int j = 0; j < graph.getSize(); j++) {
 				
 				// The formula for a PageRank:
-				double sum = 0;
+				float sum = 0;
 				boolean[] in = graph.getLinksIn(j);
 				for(int i = 0; i < graph.getSize(); i++) {
 					if(in[i]) {
@@ -73,12 +75,14 @@ public class Day13 {
 			}
 		}
 		
+		long end = System.currentTimeMillis();
+		
 		// Print out the PageRanks
-		double totalSum = 0;
+		float totalSum = 0;
 		for(int i = 0; i < graph.getSize(); i++) {
 			totalSum += pageRanks[i];
 			System.out.println(String.format("%d's page rank is %f", i, pageRanks[i]));
 		}
-		System.out.println(totalSum);
+		System.out.println(String.format("%f is the total sum; calculated in %d ms", totalSum, end - start));
 	}
 }
