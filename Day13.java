@@ -17,17 +17,18 @@ public class Day13 {
 			return;
 		}
 		MyGraph graph = null;
-		for(int j = 0; scanner.hasNextLine(); j++) {
+		for(int i = 0; scanner.hasNextLine(); i++) {
 			String[] line = scanner.nextLine().split(" ");
 			if(graph == null) {
 				graph = new MyGraph(line.length); // we assume the length and the height
 			} 									  // of the file are the same.
-			for(int i = 0; i < line.length; i++) {
-				if(line[i].equals("1")) {
-					graph.link(i, j);
+			for(int j = 0; j < line.length; j++) {
+				if(line[j].equals("1")) {
+					graph.link(i,j);
 				}
 			}
 		}
+		
 		float[] pageRanks = new float[graph.getSize()];
 		for(int i = 0; i < graph.getSize(); i++) {
 			pageRanks[i] = 1.0F / graph.getSize();
@@ -45,10 +46,8 @@ public class Day13 {
 				}
 				if(pageRanks[i] != sum) {
 					converged = false; // we weren't converged during this iteration because something had to change.
-				} else {
 					pageRanks[i] = sum;
 				}
-				System.out.println(sum);
 			}
 		}
 		for(int i = 0; i < graph.getSize(); i++) {

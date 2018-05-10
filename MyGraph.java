@@ -1,6 +1,6 @@
 
 public class MyGraph {
-	private final boolean[][] links;
+	public final boolean[][] links;
 	private final int size; // for convenience
 	
 	public MyGraph(int size) {
@@ -25,8 +25,11 @@ public class MyGraph {
 		return links[i][j];
 	}
 	
-	public boolean[] getLinksIn(int i) {
-		boolean[] in = links[i];
+	public boolean[] getLinksIn(int j) {
+		boolean[] in = new boolean[this.size];
+		for(int i = 0; i < this.size; i++){
+			in[i] = links[i][j];
+		}
 		return in;
 	}
 	
@@ -49,5 +52,9 @@ public class MyGraph {
 		System.out.println(graph.getNumLinksOut(0) == 0);
 		System.out.println(graph.isLinked(2, 3) == true);
 		System.out.println(graph.isLinked(3, 1) == false);
+		System.out.println("Links in to 2:");
+		for(int i = 0; i < graph.getSize(); i++){
+			System.out.println(i + ": " + graph.getLinksIn(2)[i]);
+		}
 	}
 }
