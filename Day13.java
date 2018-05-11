@@ -38,17 +38,49 @@ public class Day13 {
 	 * Main method for program execution
 	 * @param args Command line args.
 	 * 
-	 * java Day13 [optional_url]
+	 * java Day13 [-l] [small|medium|large|http://custom_url/data.txt].
+	 * If no argument provided, use the small graph.
+	 * The l flag determines if we want to use the LinkedList implementation
+	 * rather than the 2d boolean array implementation.
+	 * 
+	 * Expected running times:
+	 * 
+	 * MyGraph:
+	 * small: 1.000000 is the total sum; calculated in 3 ms
+	 * medium: 0.993709 is the total sum; calculated in 5990 ms
+	 * large: 0.993267 is the total sum; calculated in 96088 ms
+	 * MyGraphLL: (small, bigger, big)
+	 * -l small: 1.000000 is the total sum; calculated in 8 ms
+	 * -l medium: 0.993709 is the total sum; calculated in 7697 ms
+	 * -l large: 0.993267 is the total sum; calculated in 105205 ms
 	 */
 	public static void main(String[] args) {
-		
-		// Graph source: whatever URL is provided as an argument during execution
-		// If none provided, use the smallest graph.
-		String site = "http://cs.coloradocollege.edu/~mwhitehead/courses/2017_2018/CP222/Assignments/10/test.txt";
-		if(args.length >= 1) {
-			site = args[0];
+		if(args.length == 0) {
+			System.out.println("Usage: java Day13 [-l] [small|medium|large|<custom_url>]");
+			System.exit(1);
+			return;
 		}
-		
+		// Interpret command line arguments.
+		String site = "http://cs.coloradocollege.edu/~mwhitehead/courses/2017_2018/CP222/Assignments/10/test.txt";
+		boolean linkedList = false;
+		if(args.length >= 1) {
+			for(int i = 0; i < args.length; i++) {
+				if(args[i].equalsIgnoreCase("-l")) {
+					linkedList = true;
+					continue;
+				}
+				if(args[i].equalsIgnoreCase("small")) {
+					// site is "small" by default.
+				} else if (args[i].equalsIgnoreCase("medium")) {
+					site = "http://cs.coloradocollege.edu/~mwhitehead/courses/2017_2018/CP222/Assignments/10/bigger_graph.txt";
+				} else if (args[i].equalsIgnoreCase("large")) {
+					site = "http://cs.coloradocollege.edu/~mwhitehead/courses/2017_2018/CP222/Assignments/10/big_graph.txt";
+				} else {
+					site = args[i];
+				}
+			}
+		}
+		// create scanner to read from internet using Utils
 		Scanner scanner = null;
 		try {
 			scanner = Utils.pullText(new URL(site));
@@ -58,8 +90,14 @@ public class Day13 {
 			return;
 		}
 		
-		// Create and fill in a graph using the data from the selected site
-		GraphInterface graph = MyGraph.newInstance(scanner);
+		// Create and fill in a graph using the data from the selected site,
+		// using the selected Graph implementation.
+		GraphInterface graph = null;
+		if(linkedList) {
+			graph = MyGraphLL.newInstance(scanner);
+		} else {
+			graph = MyGraph.newInstance(scanner);
+		}
 		scanner.close();
 		
 		// Calculate and display PageRanks for the graph
@@ -89,7 +127,7 @@ public class Day13 {
 		long start = System.currentTimeMillis();
 		// Loop until the PageRanks aren't changing anymore
 		boolean converged = false;
-		final float DAMPENING = 0.85F;
+		final float dampening = 0.85F;
 		while(!converged) {
 			converged = true;
 			// Loop through each "node"
@@ -102,7 +140,7 @@ public class Day13 {
 						sum += pageRanks[i] / graph.getNumLinksOut(i);
 					}
 				}
-				sum = ((1 - DAMPENING) / graph.getSize()) + DAMPENING * sum;
+				sum = ((1 - dampening) / graph.getSize()) + dampening * sum;
 				
 				if(pageRanks[j] != sum) { // note we have NO BUFFER-- the program will run until the change
 					                      // is smaller than float can handle.
@@ -131,12 +169,4 @@ public class Day13 {
 		System.out.println(String.format("%f is the total sum; calculated in %d ms", totalSum, running_time));
 
 	}
-	// MyGraph: (small, bigger, big)
-	// 1.000000 is the total sum; calculated in 3 ms
-	// 0.993709 is the total sum; calculated in 5990 ms
-	// 0.993267 is the total sum; calculated in 96088 ms
-	// MyGraphLL: (small, bigger, big)
-	// 1.000000 is the total sum; calculated in 8 ms
-	// 0.993709 is the total sum; calculated in 7697 ms
-	// 0.993267 is the total sum; calculated in 105205 ms
 }
