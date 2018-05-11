@@ -111,6 +111,7 @@ public class Day13 {
 				}
 			}
 		}
+		System.out.println(pageRanks.length);
 		long end = System.currentTimeMillis();
 		
 		this.running_time = end - start;
@@ -129,7 +130,6 @@ public class Day13 {
 		
 		// Print total sum of PageRanks and amount of time calculations took
 		System.out.println(String.format("%f is the total sum; calculated in %d ms", totalSum, running_time));
-
 	}
 	// MyGraph: (small, bigger, big)
 	// 1.000000 is the total sum; calculated in 3 ms
