@@ -57,6 +57,8 @@ public class Day13 {
 	public static void main(String[] args) {
 		if(args.length == 0) {
 			System.out.println("Usage: java Day13 [-l] [small|medium|large|<custom_url>]");
+			System.out.println("-l: use LinkedList Graph implementation instead of 2d boolean array.");
+			System.out.println("[small|medium|large|<custom_url>]: Graph to PageRank..");
 			System.exit(1);
 			return;
 		}
